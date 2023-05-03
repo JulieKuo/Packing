@@ -10,6 +10,8 @@ logging = log.set_log(name = "run")
 
 def main(param):
     try:
+        logging.info(f"Input - {param}")
+
         # 初始化存放圖片的資料夾
         root = param["root"]
         folder = os.path.join(root, "data", "image")
@@ -28,7 +30,6 @@ def main(param):
             ]
         if param["item"][0] == param["item"][1]: # 如果長寬一樣，只有一種排法
             options.pop()
-            print(options)
 
         # 依序計算不同擺放方式所能放入的總立方體數及位置
         datas = {}
@@ -84,7 +85,7 @@ def main(param):
             total_items = sort_items(plate, items)
 
             counts = len(total_items) - 1
-            logging.info(f"length: {length}, width: {width}, hight: {hight}, counts = {counts}")
+            logging.info(f"Product - length: {length}, width: {width}, hight: {hight}, counts = {counts}")
 
             size = [length, width, hight]
             datas[hight] = {
