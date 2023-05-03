@@ -97,7 +97,7 @@ def plot(items, plate, size, gap, z_limit, path):
     ax.set_box_aspect([1, 1, 1])
     
     # 儲存圖片
-    plt.savefig(f"{path}/{num}.png")
+    plt.savefig(os.path.join(path, f"{num}.png"))
 
     # 顯示圖形
     # plt.show()
@@ -108,7 +108,7 @@ def plot(items, plate, size, gap, z_limit, path):
 def images_to_vedio(root, image_folder_path, param, hight, gap):
     # 設定輸出影片路徑
     folder_name = "_".join(str(i) for i in param["item"])
-    folder_path = os.path.join(root, f"data\\vedio\\{folder_name}")
+    folder_path = os.path.join(root, "data", "vedio", folder_name)
 
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)

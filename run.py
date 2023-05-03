@@ -12,7 +12,7 @@ def main(param):
     try:
         # 初始化存放圖片的資料夾
         root = param["root"]
-        folder = os.path.join(root, "data\\image")
+        folder = os.path.join(root, "data", "image")
         if os.path.exists(folder):
             shutil.rmtree(folder) # 刪除資料夾
 
@@ -101,7 +101,7 @@ def main(param):
 
             if counts != 0:
                 # 創建儲存圖片的資料夾
-                image_folder_path = os.path.join(root, f"data\\image\\{hight}")
+                image_folder_path = os.path.join(root, "data", "image", str(hight))
                 os.makedirs(image_folder_path) 
 
                 # 依序畫出各步驟的圖
@@ -112,7 +112,7 @@ def main(param):
                 images_to_vedio(root, image_folder_path, param, hight, gap)
             
         # 儲存datas
-        with open(os.path.join(root, "data\\data.json"), 'w') as f:
+        with open(os.path.join(root, "data", "data.json"), 'w') as f:
             json.dump(datas, f, indent = 4)
     
 
