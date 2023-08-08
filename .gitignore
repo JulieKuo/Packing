@@ -1,7 +1,3 @@
 chart
-data/image/*
-data/vedio/*
-data/data.json
 logs/*.log
-py3dbp.ipynb
 __pycache__
