@@ -1,3 +1,4 @@
 chart
 logs/*.log
+data
 __pycache__
