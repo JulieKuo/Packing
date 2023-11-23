@@ -114,7 +114,7 @@ def sort_items(plate, items):
             if i >= 2:
                 layer = dict(sorted(layer.items(), key = lambda x: x[0], reverse = True)) # 靠近原點的區域從內圈開始往外排，才能由外而內(原點)排序
 
-            # 雙數層第0區和單數層第0、1區的順序與一開始存的不同，需轉向
+            # 雙數層第0區和單數層第0、1區的順序與一開始存的不同，需以每圈為單位轉向
             for lap in layer.values():
                 if (((int(layer_name[5:]) % 2) == 0) and (area_name in ["area0"])) or\
                    (((int(layer_name[5:]) % 2) != 0) and (area_name in ["area1", "area0"])):
