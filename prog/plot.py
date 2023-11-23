@@ -105,10 +105,10 @@ def plot(items, plate, size, gap, z_limit, path):
     plt.close()
 
 
-def images_to_vedio(root, image_folder_path, param, hight, gap):
+def images_to_vedio(vedio_folder, image_folder, param, hight, gap):
     # 設定輸出影片路徑
     folder_name = "_".join(str(i) for i in param["item"])
-    folder_path = os.path.join(root, "data", "vedio", folder_name)
+    folder_path = os.path.join(vedio_folder, folder_name)
 
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
@@ -116,7 +116,7 @@ def images_to_vedio(root, image_folder_path, param, hight, gap):
     output_path = os.path.join(folder_path, f"{hight}_{gap}.mp4")
 
     # 取得資料夾中所有的png檔案名稱，依照創建日期排序
-    file_names = sorted(glob.glob(os.path.join(image_folder_path, "*.png")), key = os.path.getctime)
+    file_names = sorted(glob.glob(os.path.join(image_folder, "*.png")), key = os.path.getctime)
 
     # 讀取第一張圖片，並取得圖片大小
     first_frame = cv2.imread(file_names[0])

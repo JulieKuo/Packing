@@ -24,7 +24,6 @@ def calculate_counts(start, limit, length, width, even):
         y_count = (y_range - length) // width # 沿著y軸方向排列之立方體數量
 
         while ((x_count * width) > ((length + (x_count * width)) / 2)) and ((y_count * width) < ((length + (y_count * width)) / 2)): # 處理重疊的部分 # 內層刪除多餘空間
-        # while ((x_count * width) > (x_range / 2)) and ((y_count * width) < (y_range / 2)) and (length > y_range): # 處理重疊的部分 # 內層不刪除多餘空間
             x_count -= 1
         
         total = (x_count * 2) + (y_count * 2)
@@ -41,11 +40,11 @@ def calculate_counts(start, limit, length, width, even):
     if (length <= x_range): # 直排(沿y軸排)
         y_count1 = y_range // width # 沿著y軸方向排列之立方體數量
         if y_count1 > total:
-            y_count = y_count1
+            y_count = total = y_count1
             x_count = flag = 0
     
     if even:
-        counts = [(y_count * flag), (x_count * flag), y_count, x_count]
+        counts = [(y_count * flag), (x_count * flag), y_count, x_count] # 若集中放在一個區域，4個值裡只有1個值不為0
     else:
         counts = [(x_count * flag), (y_count * flag), x_count, y_count]
     
@@ -109,11 +108,13 @@ def sort_items(plate, items):
 
     # 新增立方體
     for layer_name, layer in items.items():
-        areas = ["area3", "area2", "area1", "area0"] if (int(layer_name[5:]) % 2) == 0 else ["area2", "area1", "area3", "area0"] # 由外而內(原點)排序區域
+        # 判斷單數層或雙數層，給予對應的排序區域。由外而內(原點)排序區域。
+        areas = ["area3", "area2", "area1", "area0"] if (int(layer_name[5:]) % 2) == 0 else ["area2", "area1", "area3", "area0"]
         for i, area_name in enumerate(areas):
             if i >= 2:
                 layer = dict(sorted(layer.items(), key = lambda x: x[0], reverse = True)) # 靠近原點的區域從內圈開始往外排，才能由外而內(原點)排序
 
+            # 雙數層第0區和單數層第0、1區的順序與一開始存的不同，需轉向
             for lap in layer.values():
                 if (((int(layer_name[5:]) % 2) == 0) and (area_name in ["area0"])) or\
                    (((int(layer_name[5:]) % 2) != 0) and (area_name in ["area1", "area0"])):

@@ -1,1 +1,0 @@
-The main process and chart can be seen in model.ipynb.
