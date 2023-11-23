@@ -43,6 +43,10 @@ class Main():
 
     def get_input(self):
         self.input = get_argv(self.logging)
+        self.plate = self.input["plate"]
+        self.item  = self.input["item"]
+        self.total_height = self.input["total_height"]
+        self.gap  = self.input["gap"]
         self.time = self.input["time"]
 
 
@@ -51,16 +55,15 @@ class Main():
             self.basic() # basic setting
 
             # 棧板大小、總高、機器手臂空隙設定
-            plate = [self.input["plate"][0], self.input["plate"][1], self.input["plate"][2]]
-            z_limit = self.input["total_height"]
-            gap = self.input["gap"]
+            plate = [self.plate[0], self.plate[1], self.plate[2]]
+            z_limit = self.total_height
 
             # 兩種排序方式: 長邊橫著排或直著排
             options = [
-                [self.input["item"][1], self.input["item"][2], self.input["item"][0]], # 直放
-                [self.input["item"][0], self.input["item"][2], self.input["item"][1]]  # 橫放
+                [self.item[1], self.item[2], self.item[0]], # 直放
+                [self.item[0], self.item[2], self.item[1]]  # 橫放
                 ]
-            if self.input["item"][0] == self.input["item"][1]: # 如果長寬一樣，只有一種排法
+            if self.item[0] == self.item[1]: # 如果長寬一樣，只有一種排法
                 options.pop()
 
             # 依序計算不同擺放方式所能放入的總立方體數及位置
@@ -70,7 +73,7 @@ class Main():
                 length = option[0]
                 width = option[1]
                 hight = option[2]
-                length_gap = length + gap # 長加上機器手臂的距離
+                length_gap = length + self.gap # 長加上機器手臂的距離
 
                 # 計算各層各圈各區域的立方體的座標及移動位置
                 items = {} # 儲存每層每圈每區的資料
@@ -114,7 +117,7 @@ class Main():
                                 
                                 cube["info"] = f"第{layer + 1}層_第{area + 1}區_第{lap + 1}圈"
 
-                        start, limit = update_start_limit(start, limit, length, gap) # 更新下一圈的start和limit座標
+                        start, limit = update_start_limit(start, limit, length, self.gap) # 更新下一圈的start和limit座標
 
                 # 排序立方體，並將其放入list中以畫圖
                 total_items = sort_items(plate, items)
@@ -142,10 +145,10 @@ class Main():
 
                     # 依序畫出各步驟的圖
                     for i in range(1, len(total_items) + 1):
-                        plot(total_items[:i], plate, size, gap, z_limit, image_folder1)
+                        plot(total_items[:i], plate, size, self.gap, z_limit, image_folder1)
                     
                     # 將圖片轉為影片
-                    images_to_vedio(self.vedio_folder, image_folder1, self.input, hight, gap)
+                    images_to_vedio(self.vedio_folder, image_folder1, self.input, hight, self.gap)
                 
             # 儲存datas
             with open(file = self.data_json, mode = "w", encoding = 'utf-8') as file:
